@@ -23,6 +23,9 @@ scc_never_lower_boundary_test() ->
 scc_never_upper_boundary_test() ->
     ?assertEqual(never, scc:calculate_jumps([1, 1, 1, -3])).
 
+scc_most_inefficient_never_case_test() ->
+    ?assertEqual(never, scc:calculate_jumps([0|lists:seq(1,10000)])).
+
 %%====================================================================
 %% test cases resulting in {ok, N}
 %%====================================================================
