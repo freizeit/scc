@@ -14,8 +14,13 @@
 calculate_jumps(A) when length(A) < 1; length(A) > 100000 ->
     erlang:error(badarg);
 calculate_jumps(A) ->
-    ?debugFmt("~nA: ~p", [A]),
-    do_calculate_jumps(A, 0, length(A), 0, gb_sets:new()).
+    Len_A = length(A),
+    if
+        Len_A < 10 -> ?debugFmt("~nA: ~p", [A]);
+        true -> ?debugFmt("~nA[:10]: ~p, ~p elements omitted",
+                          [lists:sublist(A, 10), Len_A - 10])
+    end,
+    do_calculate_jumps(A, 0, Len_A, 0, gb_sets:new()).
 
 
 %%====================================================================
@@ -26,8 +31,7 @@ calculate_jumps(A) ->
     -> {ok, jumps()} | never.
 
 do_calculate_jumps(A, K, Len_A, Jumps, Seen) ->
-    ?debugFmt("K: ~p, Next: ~p, Seen: ~p", [K, K + lists:nth(K+1, A),
-                                            gb_sets:to_list(Seen)]),
+    ?debugFmt("K: ~p, Next: ~p", [K, K + lists:nth(K+1, A)]),
 
     % Have we seen this element already? If so, we are in a loop.
     case gb_sets:is_element(K, Seen) of

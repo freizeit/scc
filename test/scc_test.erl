@@ -1,6 +1,6 @@
 -module(scc_test).
 -include_lib("eunit/include/eunit.hrl").
-
+-define(TEST_ARRAY_LEN, 22222).
 
 %%====================================================================
 %% error cases
@@ -9,7 +9,7 @@ scc_empty_list_test() ->
     ?assertError(badarg, scc:calculate_jumps([])).
 
 scc_list_too_big_test() ->
-   ?assertError(badarg, scc:calculate_jumps(lists:seq(1,100001))).
+   ?assertError(badarg, scc:calculate_jumps(lists:seq(1, 100001))).
 
 %%====================================================================
 %% test cases resulting in never
@@ -23,12 +23,13 @@ scc_never_lower_boundary_test() ->
 scc_never_upper_boundary_test() ->
     ?assertEqual(never, scc:calculate_jumps([1, 1, 1, -3])).
 
-scc_most_immediate_loop_case_test() ->
-    ?assertEqual(never, scc:calculate_jumps([0|lists:seq(1,99999)])).
+scc_loop_at_the_beginning_test() ->
+    A = [0|[1 || _X <- lists:seq(1, ?TEST_ARRAY_LEN)]],
+    ?assertEqual(never, scc:calculate_jumps(A)).
 
-%scc_worst_case_loop_test() ->
-%    A = lists:flatten([1 || X <- lists:seq(1,99999)], [0]),
-%    ?assertEqual(never, scc:calculate_jumps(A).
+scc_loop_at_the_end_test() ->
+    A = lists:flatten([1 || _X <- lists:seq(1, ?TEST_ARRAY_LEN)], [0]),
+    ?assertEqual(never, scc:calculate_jumps(A)).
 
 %%====================================================================
 %% test cases resulting in {ok, N}
