@@ -27,7 +27,7 @@ calculate_jumps(A) ->
 %% Internal functions
 %%====================================================================
 -spec do_calculate_jumps(A::nonempty_list(value()), K::0..99999,
-                         Len_A::1..100000, Jumps::0..100001, Seen::any())
+                         Len_A::1..100000, Jumps::0..100000, Seen::any())
     -> {ok, jumps()} | never.
 
 do_calculate_jumps(A, K, Len_A, Jumps, Seen) ->
