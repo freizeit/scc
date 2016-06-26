@@ -1,6 +1,6 @@
 # Jump game
 
-I used [rebar3](https://github.com/erlang/rebar3) for this coding exercise. If you'd like to run the unit tests use the following command:
+I used [rebar3](https://github.com/erlang/rebar3) for this coding exercise. The unit tests can be run as follows:
 
 ```bash
 rebar3 eunit
