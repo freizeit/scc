@@ -9,9 +9,10 @@
 %% API functions
 %%====================================================================
 -type value() :: -1000000..1000000.
--type jumps() :: 1..100001.
+-type jumps() :: 1..100000.
 -spec calculate_jumps(A::nonempty_list(value())) -> { ok, jumps()} | never.
-calculate_jumps(A) when length(A) < 1; length(A) > 100000 -> erlang:error(badarg);
+calculate_jumps(A) when length(A) < 1; length(A) > 100000 ->
+    erlang:error(badarg);
 calculate_jumps(A) ->
     ?debugFmt("~nA: ~p", [A]),
     do_calculate_jumps(A, 0, length(A), 0).
